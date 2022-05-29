@@ -22,7 +22,7 @@ func NewBox(shapesCapacity int) *box {
 func (b *box) AddShape(shape Shape) error {
 	
 	if len(b.shapes) == b.shapesCapacity {
-		return fmt.Errorf("The box has no more capacity")
+		return fmt.Errorf("the box has no more capacity")
 	}
 
 	b.shapes = append(b.shapes, shape)
@@ -109,15 +109,20 @@ func (b *box) RemoveAllCircles() error {
 
 	ok := b.FindCircle()
 	if !ok {
-		return fmt.Errorf("There are no circles in slice")
+		return fmt.Errorf("there are no circles in slice")
 	}
 
-	for pos := range(b.shapes) {
+	lastPos := len(b.shapes)-1
+	
+	for pos := 0; pos <= lastPos; {
 
 		if _, ok := b.shapes[pos].(*Circle); ok {
 			b.DelFromShapes(pos)
+			lastPos--
+			continue
 		}
 		
+		pos++
 	}
 
 	return nil
@@ -131,7 +136,7 @@ func (b *box) CheckIndex(index int) (err error) {
 	}
 
 	if b.shapes[index] == nil {
-		return fmt.Errorf("Shape with index %d doesn't exist", index)
+		return fmt.Errorf("shape with index %d doesn't exist", index)
 	}
 
 	return nil
